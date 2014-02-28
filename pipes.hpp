@@ -1,21 +1,10 @@
-#include <string>
-#include <iostream>
-#include <functional>
+#ifndef PIPES_PIPES_HPP
+#define PIPES_PIPES_HPP
 
-template<typename T>
-void operator|(T lhs, void (*rhs)(T)) {
-	rhs(lhs);
+template<typename T, typename F>
+auto operator|(T lhs, F rhs) -> decltype(rhs(lhs)) {
+    return rhs(lhs);
 
-} // void operator|(T lhs, void (*rhs)(T));
+} // auto operator||(T lhs, F rhs) -> decltype(rhs(lhs));
 
-template<typename T, typename R>
-R operator|(T lhs, R (*rhs)(T)) {
-	return rhs(lhs);
-
-} // R operator|(T lhs, R (*rhs)(T));
-
-template<typename T, typename R>
-R operator|(T lhs, std::function<R(T)> rhs) {
-	return rhs(lhs);
-
-} // R operator|(T lhs, std::function<R(T)>);
+#endif // PIPES_PIPES_HPP
